@@ -1,0 +1,238 @@
+* {
+	border: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+:root {
+	--hue: 223;
+	--bg: hsl(var(--hue),90%,90%);
+	--fg: hsl(var(--hue),90%,10%);
+	--primary: hsl(var(--hue),90%,50%);
+	--trans-dur: 0.3s;
+	font-size: calc(16px + (24 - 16) * (100vw - 320px) / (2560 - 320));
+}
+body {
+	background-color: var(--bg);
+	background-image: linear-gradient(90deg,hsla(var(--hue),90%,50%,0),hsla(var(--hue),90%,50%,0.5));
+	color: var(--fg);
+	display: grid;
+	place-items: center;
+	font: 1em/1.5 Cousine, monospace;
+	height: 100vh;
+	transition:
+		background-color var(--trans-dur),
+		color var(--trans-dur);
+}
+.clock,
+.clock__border {
+	display: flex;
+}
+.clock,
+.clock::before,
+.clock::after {
+	background-color: var(--primary);
+}
+.clock {
+	border-radius: 3.5em;
+	box-shadow:
+		0.5em 0.25em 0.5em hsla(var(--hue),10%,10%,0.3) inset,
+		-0.5em -0.25em 0.5em hsla(var(--hue),10%,10%,0.7) inset;
+	margin-bottom: 1.25em;
+	position: relative;
+	width: 18em;
+	height: 10em;
+}
+.clock::before,
+.clock::after {
+	border-radius: 50% 50% 50% 50% / 0.25em 0.25em 1.25em 1.25em;
+	box-shadow: -0.25em -0.125em 0.25em hsla(var(--hue),10%,10%,0.9) inset;
+	content: "";
+	position: absolute;
+	bottom: -1.25em;
+	width: 2em;
+	height: 1.5em;
+}
+.clock::before {
+	left: 3em;
+}
+.clock::after {
+	right: 3em;
+}
+.clock__am-pm,
+.clock__colon,
+.clock__digit {
+	position: relative;
+	margin: 0 0.25em;
+	z-index: 1;
+}
+.clock__am-pm > div,
+.clock__digit-stroke {
+	transition:
+		filter 0.3s ease-in-out,
+		opacity 0.2s 0.3s ease-in-out;
+}
+.clock__am-pm {
+	color: hsl(var(--hue),90%,90%);
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 0 0 0.125em hsla(0,0%,0%,0.9);
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	width: 2ch;
+}
+.clock__border {
+	background-color: hsl(var(--hue),10%,40%);
+	background-image:
+		radial-gradient(circle at 0 0,hsl(var(--hue),10%,90%) 7%,hsla(var(--hue),10%,90%,0) 8%),
+		radial-gradient(12% 40% at 92% 37.5%,hsl(var(--hue),10%,90%) 48%,hsla(var(--hue),10%,90%,0) 50%),
+		linear-gradient(3deg,hsl(var(--hue),10%,25%) 49.5%,hsla(var(--hue),10%,25%,0) 50%);
+	border-radius: 2.5em;
+	box-shadow:
+		0 -0.125em 0 hsl(var(--hue),10%,10%) inset,
+		0 -0.25em 0.125em hsl(var(--hue),90%,50%) inset,
+		0 -0.5em 0.125em hsl(var(--hue),10%,60%) inset,
+		0 -1em 0.125em hsl(var(--hue),10%,80%) inset;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+	position: relative;
+	width: calc(100% - 2.5em);
+	height: calc(100% - 2.5em);
+}
+.clock__border:before,
+.clock__border:after {
+	content: "";
+	display: block;
+	position: absolute;
+}
+.clock__border:before {
+	background-color: hsl(var(--hue),90%,45%);
+	border-radius: 2em;
+	box-shadow: 0.125em 0.125em 0.125em hsla(var(--hue),10%,25%,0.4) inset;
+	top: 0.6em;
+	left: 0.6em;
+	width: calc(100% - 1.2em);
+	height: calc(100% - 1.2em);
+}
+.clock__border:after {
+	box-shadow:
+		0.125em 0.125em 0 hsl(var(--hue),90%,50%) inset,
+		0 0 0 0.2em hsl(var(--hue),90%,40%) inset;
+	border-radius: 2.25em;
+	top: 0.2em;
+	left: 0.2em;
+	width: calc(100% - 0.4em);
+	height: calc(100% - 0.4em);
+}
+.clock__colon {
+	animation: blink 1s ease-in-out infinite;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	position: relative;
+	width: 0.5em;
+	height: 2.5em;
+}
+.clock__colon:before,
+.clock__colon:after {
+	background-color: hsl(var(--hue),90%,90%);
+	border-radius: 0.125em;
+	box-shadow:
+		0.125em 0.125em 0.125em hsla(0,0%,0%,0.2) inset,
+		-0.125em -0.125em 0.125em hsla(0,0%,0%,0.7) inset,
+		0 0 0.125em hsla(0,0%,0%,0.7);
+	content: "";
+	display: block;
+	width: 0.5em;
+	height: 0.5em;
+}
+.clock__digit {
+	width: 2em;
+	height: 3.5em;
+}
+.clock__digit-stroke {
+	background-color: hsl(var(--hue),90%,90%);
+	border-radius: 0.125em;
+	box-shadow:
+		0 0.125em 0.125em hsla(0,0%,0%,0.5) inset,
+		0 -0.125em 0.125em hsla(0,0%,0%,0.7) inset,
+		0 0 0.125em hsla(0,0%,0%,0.7);
+	position: absolute;
+	width: 1em;
+	height: 0.5em;
+}
+.clock__digit-stroke:nth-child(1),
+.clock__digit-stroke:nth-child(7) {
+	left: 0.5em;
+}
+.clock__digit-stroke:nth-child(2),
+.clock__digit-stroke:nth-child(3),
+.clock__digit-stroke:nth-child(5),
+.clock__digit-stroke:nth-child(6) {
+	box-shadow:
+		0.125em 0 0.125em hsla(0,0%,0%,0.5) inset,
+		-0.125em 0 0.125em hsla(0,0%,0%,0.7) inset,
+		0 0 0.125em hsla(0,0%,0%,0.7);
+	width: 0.5em;
+	height: 1em;
+}
+.clock__digit-stroke:nth-child(2),
+.clock__digit-stroke:nth-child(3) {
+	top: 0.5em;
+}
+.clock__digit-stroke:nth-child(3),
+.clock__digit-stroke:nth-child(6) {
+	right: 0;
+}
+.clock__digit-stroke:nth-child(4) {
+	top: calc(50% - 0.25em);
+	left: 0.5em;
+}
+.clock__digit-stroke:nth-child(5),
+.clock__digit-stroke:nth-child(6) {
+	bottom: 0.5em;
+}
+.clock__digit-stroke:nth-child(7) {
+	bottom: 0;
+}
+[data-digit=""] .clock__digit-stroke,
+[data-digit="0"] .clock__digit-stroke:nth-child(4),
+[data-digit="1"] .clock__digit-stroke:not(:nth-child(3)):not(:nth-child(6)),
+[data-digit="2"] .clock__digit-stroke:nth-child(2),
+[data-digit="2"] .clock__digit-stroke:nth-child(6),
+[data-digit="3"] .clock__digit-stroke:nth-child(2),
+[data-digit="3"] .clock__digit-stroke:nth-child(5),
+[data-digit="4"] .clock__digit-stroke:nth-child(1),
+[data-digit="4"] .clock__digit-stroke:nth-child(5),
+[data-digit="4"] .clock__digit-stroke:nth-child(7),
+[data-digit="5"] .clock__digit-stroke:nth-child(3),
+[data-digit="5"] .clock__digit-stroke:nth-child(5),
+[data-digit="6"] .clock__digit-stroke:nth-child(3),
+[data-digit="7"] .clock__digit-stroke:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(6)),
+[data-digit="9"] .clock__digit-stroke:nth-child(5),
+[data-digit="AM"] [data-pm],
+[data-digit="PM"] [data-am] {
+	filter: brightness(0);
+	opacity: 0;
+}
+.clock__shadow {
+	background-color: hsla(var(--hue),90%,10%,0.7);
+	border-radius: 3.5em 3.5em 3.5em 3.5em / 50% 50% 50% 50%;
+	filter: blur(2px);
+	position: absolute;
+	top: calc(100% + 0.5em);
+	left: 0;
+	width: 100%;
+	height: 10%;
+	transform: skewX(45deg);
+	transform-origin: 50% 0;
+	z-index: -1;
+}
+
+/* Animations */
+@keyframes blink {
+	from, 30%, to { filter: brightness(1); }
+	50%, 80% { filter: brightness(0); }
+}
